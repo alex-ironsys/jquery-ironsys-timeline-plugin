@@ -1,4 +1,4 @@
-jquery-ironsys-timeline-plugin
+jQuery ironsys timeline plugin
 ==============================
 
 ## Introduction
@@ -79,13 +79,13 @@ However there are many options you may cofigure manually.
         <td><b>aggregateValues</b></td>
         <td><i>bool</i></td>
         <td>false</td>
-        <td>Wheter to draw the same values coming from the same source as one block with additional counter aside</td>
+        <td>Whether to draw the same values coming from the same source as one block with additional counter aside</td>
     </tr>
     <tr>
         <td><b>autoUnitSize</b></td>
         <td><i>bool</i></td>
         <td>true</td>
-        <td>Wheter to calculate distance between events on the timeline automatically</td>
+        <td>Whether to calculate distance between events on the timeline automatically</td>
     </tr>
     <tr>
         <td><b>borderWidth</b></td>
@@ -175,7 +175,7 @@ However there are many options you may cofigure manually.
         <td><b>lineWidth</b></td>
         <td><i>int</i></td>
         <td>2</td>
-        <td>>Line width for timeline, lines between values and entities, and arrows</td>
+        <td>Line width for timeline, lines between values and entities, and arrows</td>
     </tr>
     <tr>
         <td><b>offset</b></td>
@@ -205,7 +205,7 @@ However there are many options you may cofigure manually.
         <td><b>showEntities</b></td>
         <td><i>bool</i></td>
         <td>true</td>
-        <td>Wheter to render entity indentyfing text in entity block (or empty circle instead)</td>
+        <td>Whether to render entity indentyfing text in entity block (or empty circle instead)</td>
     </tr>
     <tr>
         <td><b>unitSize</b></td>
@@ -214,3 +214,44 @@ However there are many options you may cofigure manually.
         <td>Distance between adjacent values on the timeline</td>
     </tr>
 </table>
+
+## Indentation
+
+The data is distributed to sources. Sources are distributed on both sides of timeline. Sources with most inputs are placed
+closer to the timeline. The `offset` parameter defines size of subsequent indentations.
+
+## Data aggregation
+
+You may aggregate adjacent values from the same source by setting `aggregateValues` option to <b>true</b>.
+The values will be counted and the number will be displayed aside the value box. Only the same values from the same
+entity will be aggregated, and only if they are not split by any value from different entity or different value from
+the same entity. Please check the demo for example `Damn, what's that?` values.
+
+## Colors
+
+Colors are assigned to entities. Each value block for given entity and corresponding entity block will
+have the same color. There are 6 colors defined by default. If there are more than 6 entities, they will also
+be distributed among existing colors.
+
+You may pass `colors` array as an option. The following properties for a color object are considered:
+
+`bordercolor` - color for border of a block
+`bgcolor` -  background color for the block
+`fgcolor` - color for text inside the block
+
+The default `colors` array looks like this:
+
+```javascript
+"colors": [
+            { "bgcolor": "#FF0000", "bordercolor": "#A60000" ,"fgcolor": "#FFFFFF" },
+            { "bgcolor": "#00AA00", "bordercolor": "#006F00" ,"fgcolor": "#FFFFFF" },
+            { "bgcolor": "#0086FF", "bordercolor": "#0057A6" ,"fgcolor": "#FFFFFF" },
+            { "bgcolor": "#FF8900", "bordercolor": "#A65900" ,"fgcolor": "#FFFFFF" },
+            { "bgcolor": "#FF0086", "bordercolor": "#A60057" ,"fgcolor": "#FFFFFF" },
+            { "bgcolor": "#8900FF", "bordercolor": "#5900A6" ,"fgcolor": "#FFFFFF" }
+          ]
+```
+
+If `fgcolor` property for color object is not defined, it will be #FFFFFF by default.
+If `bgcolor` property for color object is not defined, it will be #888888 by default.
+If `bordercolor` property for color object is not defined, it will be the same as `bgcolor`.

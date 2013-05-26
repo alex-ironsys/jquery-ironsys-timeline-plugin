@@ -388,7 +388,9 @@
     this.data.forEach(function(record, i) {
         that.drawValue(record, i);
         that.drawEntity(record, i);
-        that.drawDate(record, i);
+        if(that.options.showDates) {
+          that.drawDate(record, i);
+        }
     });
   }
   

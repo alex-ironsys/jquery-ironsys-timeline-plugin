@@ -16,15 +16,11 @@ $(document).ready(function(){
 
 	$('#timeline').timeline({
 		autoUnitSize: true,
-		borderWidth: 3,
-		cornerRadius: 10,
 		aggregateValues: true,
 		data: data,
-		unitSize: 40,
 		offset: 40,
 		paddingX: 15,
-		paddingy: 10,
-		showDates: false
+		paddingy: 10
 	});
 });
 

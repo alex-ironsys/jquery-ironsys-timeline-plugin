@@ -75,127 +75,140 @@ However there are many options you may cofigure manually.
 	<tr>
 		<th>option</th><th>default</th><th>meaning</th>
 	<tr>
+	<tr>
+        <td>aggregateValues</td>
+        <td>bool</td>
+        <td>false</td>
+        <td>Wheter to draw the same values coming from the same source as one block with additional counter aside</td>
+    </tr>
     <tr>
         <td>autoUnitSize</td>
+        <td>bool</td>
         <td>true</td>
-        <td></td>
+        <td>Wheter to calculate distance between events on the timeline automatically</td>
     </tr>
     <tr>
         <td>borderWidth</td>
+        <td>int</td>
         <td>2</td>
-        <td></td>
+        <td>Border width for all drawn boxes</td>
     </tr>
     <tr>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>cornerRadius</td>
+        <td>int</td>
+        <td>10</td>
+        <td>Radius of rounded corners for boxes containing values</td>
     </tr>
     <tr>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>dateColor</td>
+        <td>color</td>
+        <td>#888888</td>
+        <td>Color for text represanting date / time</td>
     </tr>
     <tr>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>dateFontSize</td>
+        <td>int</td>
+        <td>10</td>
+        <td>Font size for text represanting date / time</td>
     </tr>
     <tr>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>dateMarginY</td>
+        <td>int</td>
+        <td>2</td>
+        <td>Vertical margin for text represanting date / time</td>
     </tr>
     <tr>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>dateMarginX</td>
+        <td>int</td>
+        <td>8</td>
+        <td>Horizontal margin for text represanting date / time</td>
     </tr>
     <tr>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>direction</td>
+        <td>string</td>
+        <td>down</td>
+        <td>Direction of the diagram - draws the arrow for the timeline in proper place - "up" and "down" allowed</td>
     </tr>
     <tr>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>entityCornerRadius</td>
+        <td>int</td>
+        <td>5</td>
+        <td>Radius of rounded corners for boxes containing entities</td>
     </tr>
     <tr>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>entityFontSize</td>
+        <td>int</td>
+        <td>14</td>
+        <td>Font size for text represanting entities</td>
     </tr>
     <tr>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>entityPaddingX</td>
+        <td>int</td>
+        <td>6</td>
+        <td>Horizontal padding for boxes containing entities</td>
     </tr>
     <tr>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>entityPaddingY</td>
+        <td>int</td>
+        <td>3</td>
+        <td>Vertical padding for boxes containing entities</td>
     </tr>
     <tr>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>fontFace</td>
+        <td>string</td>
+        <td>Arial</td>
+        <td>Font face name for all texts</td>
     </tr>
     <tr>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>fontSize</td>
+        <td>int</td>
+        <td>16</td>
+        <td>Font size for text representing values</td>
     </tr>
     <tr>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>lineColor</td>
+        <td>color</td>
+        <td>#888888</td>
+        <td>Color for timeline, lines between values and entities, and arrows</td>
     </tr>
     <tr>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>lineWidth</td>
+        <td>int</td>
+        <td>2</td>
+        <td>>Line width for timeline, lines between values and entities, and arrows</td>
     </tr>
     <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
+        <td>offset</td>
         <td></td>
         <td></td>
         <td></td>
     </tr>
     <tr>
+        <td>paddingX</td>
         <td></td>
         <td></td>
         <td></td>
     </tr>
     <tr>
+        <td>paddingY</td>
         <td></td>
         <td></td>
         <td></td>
     </tr>
     <tr>
+        <td>showDates</td>
         <td></td>
         <td></td>
         <td></td>
     </tr>
     <tr>
+        <td>showEntities</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>unitSize</td>
         <td></td>
         <td></td>
         <td></td>

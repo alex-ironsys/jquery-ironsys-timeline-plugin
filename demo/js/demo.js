@@ -18,16 +18,13 @@ $(document).ready(function(){
 		autoUnitSize: true,
 		borderWidth: 3,
 		cornerRadius: 10,
-		cumulateValues: true,
+		aggregateValues: true,
 		data: data,
-		entityFontSize: 12,
-		fontSize: 16, 
-		fontFace: "Verdana",
-		showEntities: false,
 		unitSize: 40,
 		offset: 40,
 		paddingX: 15,
-		paddingy: 10
+		paddingy: 10,
+		showDates: false
 	});
 });
 

@@ -1,6 +1,7 @@
 ;(function($, window, document, undefined){
   var pluginName = 'timeline',
       defaults = {
+          "aggregateValues": false,
           "autoUnitSize": true,
           "borderWidth": 2,
           "colors": [
@@ -12,11 +13,10 @@
             { "bgcolor": "#8900FF", "bordercolor": "#5900A6" ,"fgcolor": "#FFFFFF" }
           ],
           "cornerRadius": 10,
-          "cumulateValues": false,
           "dateColor": "#888888",
           "dateFontSize": 10,
-          "datePaddingY": 2,
-          "datePaddingX": 8,
+          "dateMarginY": 2,
+          "dateMarginX": 8,
           "direction": "down",
           "entityCornerRadius": 5,
           "entityFontSize": 14,
@@ -29,6 +29,7 @@
           "offset": 50,
           "paddingX": 10,
           "paddingY": 6,
+          "showDates": true,
           "showEntities": true,
           "unitSize": 50,
       };
@@ -85,7 +86,7 @@
       "maxValueWidth": maxValueWidth,
       "maxEntityWidth": maxEntityWidth,
       "maxDateWidth": maxDateWidth,
-      "minOffset": Math.round((maxValueWidth + maxEntityWidth) /2) + maxDateWidth + this.options.paddingX + this.options.entityPaddingX + 2 * this.options.datePaddingX
+      "minOffset": Math.round((maxValueWidth + maxEntityWidth) /2) + maxDateWidth + this.options.paddingX + this.options.entityPaddingX + 2 * this.options.dateMarginX
     }
   }
 
@@ -98,7 +99,7 @@
 
   Plugin.prototype.prepareData = function(sourceData) {
     var data = [];
-    if(!this.options.cumulateValues) {
+    if(!this.options.aggregateValues) {
       sourceData.forEach(function(record, i) {
         record.count = 1;
         data.push(record);
@@ -129,7 +130,7 @@
   Plugin.prototype.getUnitSize = function() {
     var valueHeight = this.options.fontSize + 2 * this.options.paddingY + 4;
     var enityHeight = this.options.entityFontSize + 2 * this.options.entityPaddingY + 4;
-    var dateHeight = this.options.dateFontSize + 2 * this.options.datePaddingY + 4;
+    var dateHeight = this.options.dateFontSize + 2 * this.options.dateMarginY + 4;
 
     var minUnitSize = Math.max(valueHeight, enityHeight, dateHeight);
 
@@ -267,7 +268,7 @@
       this.ctx.stroke();
   }
 
-  Plugin.prototype.drawCumulatedNumber = function(record, i) {
+  Plugin.prototype.drawAggregatedNumber = function(record, i) {
       if(record["count"] > 1) {
         var boxCoords = this.getBoxCoords(record, i);
         this.ctx.font = this.options.dateFontSize + "px " + this.options.fontFace;
@@ -287,8 +288,8 @@
       this.drawValueLine(record, i);
       this.drawValueBox(record, i);
       this.drawValueText(record, i);
-      if(this.options.cumulateValues) {
-        this.drawCumulatedNumber(record, i);
+      if(this.options.aggregateValues) {
+        this.drawAggregatedNumber(record, i);
       }
   }
   
@@ -369,7 +370,7 @@
   Plugin.prototype.drawDate = function(record, i) {
       this.ctx.font = this.options.dateFontSize + "px " + this.options.fontFace;
       var direction = this.uniqueEntities[record.entity]["direction"];
-      var midX = this.midX + direction * (Math.round(this.metaData.maxValueWidth / 2) + this.options.paddingX + this.options.datePaddingX);
+      var midX = this.midX + direction * (Math.round(this.metaData.maxValueWidth / 2) + this.options.paddingX + this.options.dateMarginX);
         this.ctx.textBaseline = "middle";
         if(direction > 0) {
           this.ctx.textAlign = "left";
@@ -378,7 +379,7 @@
         }
       this.ctx.textBaseline = "bottom";
       this.ctx.fillStyle = this.options.dateColor;
-      this.ctx.fillText(record.time, midX, (i + 1) * this.options.unitSize - this.options.datePaddingY);
+      this.ctx.fillText(record.time, midX, (i + 1) * this.options.unitSize - this.options.dateMarginY);
   }
 
   Plugin.prototype.init = function () {

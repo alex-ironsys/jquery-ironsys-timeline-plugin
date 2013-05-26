@@ -7,44 +7,102 @@
             { "bgcolor": "#FF0000", "bordercolor": "#A60000" ,"fgcolor": "#FFFFFF" },
             { "bgcolor": "#00AA00", "bordercolor": "#006F00" ,"fgcolor": "#FFFFFF" },
             { "bgcolor": "#0086FF", "bordercolor": "#0057A6" ,"fgcolor": "#FFFFFF" },
-            { "bgcolor": "#FF8800", "bordercolor": "#A65900" ,"fgcolor": "#FFFFFF" },
-            { "bgcolor": "#00FF88", "bordercolor": "#A60000" ,"fgcolor": "#FFFFFF" },
-            { "bgcolor": "#FF00FF", "bordercolor": "#A60000" ,"fgcolor": "#FFFFFF" }
+            { "bgcolor": "#FF8900", "bordercolor": "#A65900" ,"fgcolor": "#FFFFFF" },
+            { "bgcolor": "#FF0086", "bordercolor": "#A60057" ,"fgcolor": "#FFFFFF" },
+            { "bgcolor": "#8900FF", "bordercolor": "#5900A6" ,"fgcolor": "#FFFFFF" }
           ],
           "cornerRadius": 10,
           "cumulateValues": false,
+          "dateColor": "#888888",
+          "dateFontSize": 10,
+          "datePaddingY": 2,
+          "datePaddingX": 8,
           "direction": "down",
+          "entityCornerRadius": 5,
+          "entityFontSize": 14,
+          "entityPaddingX": 6,
+          "entityPaddingY": 3,
           "fontFace": "Arial",
           "fontSize": 16,
           "height": 500,
           "lineColor": "#888888",
           "lineWidth": 2,
           "offset": 100,
-          "paddingX": 5,
-          "paddingY": 5,
+          "paddingX": 10,
+          "paddingY": 6,
           "unitSize": 50,
       };
       
   function Plugin(element, options) {
-        this.element = element;
-        this.$element = $(element);
-        this.options = $.extend( {}, defaults, options) ;
-        this.data = this.prepareData(this.options.data);
         this._defaults = defaults;
         this._name = pluginName;
         this.exposed = false;
-        this.uniqueEntities = this.getUniqueEntities();
-        this.width = this.$element.width();
-        this.midX = Math.round(this.width / 2);
+        this.element = element;
+        this.$element = $(element);
+        this.options = $.extend( {}, defaults, options);
+        this.colorsCount = this.options.colors.length;
+        this.data = this.prepareData(this.options.data);
         this.options.unitSize = this.getUnitSize();
         this.height = this.calculateHeight();
+        this.initCanvas();
+        this.metaData = this.getMetaData();
+        this.uniqueEntities = this.getUniqueEntities();
+        this.midX = Math.round(this.width / 2);
         this.init();
+  }
+
+  Plugin.prototype.getMetaData = function() {
+    var maxValueWidth = 0;
+    var maxEntityWidth = 0;
+    var maxDateWidth = 0;
+
+    var that = this;
+    this.ctx.font = this.options.fontSize + "px " + this.options.fontFace;
+    this.data.forEach(function(record, i) {
+      var valueWidth = that.ctx.measureText(record.value).width;
+      if(valueWidth > maxValueWidth) {
+        maxValueWidth = valueWidth;
+      }
+    });
+
+    this.ctx.font = this.options.entityFontSize + "px " + this.options.fontFace;
+    this.data.forEach(function(record, i) {
+      var valueWidth = that.ctx.measureText(record.entity).width;
+      if(valueWidth > maxEntityWidth) {
+        maxEntityWidth = valueWidth;
+      }
+    });
+
+    this.ctx.font = this.options.dateFontSize + "px " + this.options.fontFace;
+    this.data.forEach(function(record, i) {
+      var valueWidth = that.ctx.measureText(record.time).width;
+      if(valueWidth > maxDateWidth) {
+        maxDateWidth = valueWidth;
+      }
+    });
+
+    return {
+      "maxValueWidth": maxValueWidth,
+      "maxEntityWidth": maxEntityWidth,
+      "maxDateWidth": maxDateWidth,
+      "minOffset": Math.round((maxValueWidth + maxEntityWidth) /2) + maxDateWidth + this.options.paddingX + this.options.entityPaddingX + 2 * this.options.datePaddingX
+    }
+  }
+
+  Plugin.prototype.initCanvas = function() {
+    this.width = this.$element.width();
+    this.$element.html("<canvas id=\"ironsys_timeline\" width=\"" + this.width + "\" height=\"" + this.height + "\"></canvas>");
+    this.canvas = document.getElementById("ironsys_timeline");
+    this.ctx = this.canvas.getContext("2d");
   }
 
   Plugin.prototype.prepareData = function(sourceData) {
     var data = [];
     if(!this.options.cumulateValues) {
-      return sourceData;
+      sourceData.forEach(function(record, i) {
+        record.count = 1;
+        data.push(record);
+      });
     } else {
       var previous = { "time": null, "entity": null, "value": null };
       var counter = 1;
@@ -59,7 +117,6 @@
         }
         data.push(record);
         previous = record;
-        console.log(record);
       });
     }
     return data;
@@ -70,10 +127,15 @@
   }
 
   Plugin.prototype.getUnitSize = function() {
+    var valueHeight = this.options.fontSize + 2 * this.options.paddingY + 4;
+    var enityHeight = this.options.entityFontSize + 2 * this.options.entityPaddingY + 4;
+    var dateHeight = this.options.dateFontSize + 2 * this.options.datePaddingY + 4;
+
+    var minUnitSize = Math.max(valueHeight, enityHeight, dateHeight);
+
     if(this.options.autoUnitSize) {
-      return (this.options.fontSize + 2 * this.options.paddingY) * 2;
+      return minUnitSize * 2;
     }
-    var minUnitSize = this.options.fontSize + 2 * this.options.paddingY + 4;
     if(this.options.unitSize < minUnitSize) {
       return minUnitSize;
     } else {
@@ -104,22 +166,24 @@
         result = {};
         var dir = -1;
         var dist = 1;
+        var j;
         tmp.forEach(function(record, i) {
 
-          if((typeof that.options.colors[i] != 'undefined') && (typeof that.options.colors[i]["bgcolor"] != 'undefined')) {
-            var bgcolor = that.options.colors[i]["bgcolor"];
+          j = parseInt(i) % that.colorsCount;
+          if((typeof that.options.colors[j] != 'undefined') && (typeof that.options.colors[j]["bgcolor"] != 'undefined')) {
+            var bgcolor = that.options.colors[j]["bgcolor"];
           } else {
             var bgcolor = "#888888";
           }
 
-          if((typeof that.options.colors[i] != 'undefined') && (typeof that.options.colors[i]["bordercolor"] != 'undefined')) {
-            var bordercolor = that.options.colors[i]["bordercolor"];
+          if((typeof that.options.colors[j] != 'undefined') && (typeof that.options.colors[j]["bordercolor"] != 'undefined')) {
+            var bordercolor = that.options.colors[j]["bordercolor"];
           } else {
             var bordercolor = bgcolor;
           }
 
-          if((typeof that.options.colors[i] != 'undefined') && (typeof that.options.colors[i]["fgcolor"] != 'undefined')) {
-            var fgcolor = that.options.colors[i]["fgcolor"];
+          if((typeof that.options.colors[j] != 'undefined') && (typeof that.options.colors[j]["fgcolor"] != 'undefined')) {
+            var fgcolor = that.options.colors[j]["fgcolor"];
           } else {
             var fgcolor = "#FFFFFF";
           }
@@ -141,6 +205,7 @@
   }
 
   Plugin.prototype.getBoxCoords = function(record, i) {
+    this.ctx.font = this.options.fontSize + "px " + this.options.fontFace;
     return {
       "x": this.midX - Math.round(this.ctx.measureText(record.value).width / 2) - this.options.paddingX,
       "y": (i + 1) * this.options.unitSize - Math.round(this.options.fontSize / 2) - this.options.paddingY,
@@ -183,6 +248,7 @@
   }
 
   Plugin.prototype.drawValueText = function(record, i) {
+      this.ctx.font = this.options.fontSize + "px " + this.options.fontFace;
       this.ctx.textBaseline = "middle";
       this.ctx.textAlign = "center";
       this.ctx.fillStyle = this.uniqueEntities[record.entity]["fgcolor"];
@@ -190,7 +256,7 @@
   }
 
   Plugin.prototype.drawValueLine = function(record, i) {
-      var valueX = this.midX + this.uniqueEntities[record.entity]["direction"] * this.uniqueEntities[record.entity]["distance"] * this.options.offset;
+      var valueX = this.midX + this.uniqueEntities[record.entity]["direction"] * (this.uniqueEntities[record.entity]["distance"] * this.options.offset + this.metaData.minOffset);
       var valueY = (i + 1) * this.options.unitSize;
 
       this.ctx.strokeStyle = this.options.lineColor;
@@ -201,10 +267,29 @@
       this.ctx.stroke();
   }
 
+  Plugin.prototype.drawCumulatedNumber = function(record, i) {
+      if(record["count"] > 1) {
+        var boxCoords = this.getBoxCoords(record, i);
+        this.ctx.font = this.options.dateFontSize + "px " + this.options.fontFace;
+        var direction = this.uniqueEntities[record.entity]["direction"];
+        this.ctx.textBaseline = "middle";
+        if(direction < 0) {
+          this.ctx.textAlign = "left";
+        } else {
+          this.ctx.textAlign = "right";
+        }
+        this.ctx.fillStyle = this.options.dateColor;
+        this.ctx.fillText("x " + record.count, this.midX - direction * (Math.round(boxCoords.width / 2) + 10), (i + 1) * this.options.unitSize);
+      }
+  }
+
   Plugin.prototype.drawValue = function(record, i) {
       this.drawValueLine(record, i);
       this.drawValueBox(record, i);
       this.drawValueText(record, i);
+      if(this.options.cumulateValues) {
+        this.drawCumulatedNumber(record, i);
+      }
   }
   
   Plugin.prototype.drawTimeline = function() {
@@ -227,17 +312,70 @@
       this.ctx.stroke();
   }
 
-  Plugin.prototype.init = function () {
-    this.$element.html("<canvas id=\"ironsys_timeline\" width=\"" + this.width + "\" height=\"" + this.height + "\"></canvas>");
-    this.canvas = document.getElementById("ironsys_timeline");
-    this.ctx = this.canvas.getContext("2d");
-    this.ctx.font = this.options.fontSize + "px " + this.options.fontFace;
-    var that = this;
+  Plugin.prototype.drawEntity = function(record, i) {
+      this.drawEntityBox(record, i);
+      this.drawEntityText(record, i);
+  }
 
+  Plugin.prototype.drawEntityBox = function(record, i) {
+      this.ctx.lineCap = "round";
+      this.ctx.lineWidth = this.options.borderWidth;
+      var boxCoords = this.getEntityBoxCoords(record, i);
+      console.log(boxCoords);
+      this.roundedRect(
+        boxCoords.x, 
+        boxCoords.y, 
+        boxCoords.width, 
+        boxCoords.height, 
+        this.options.entityCornerRadius,
+        this.uniqueEntities[record.entity]["bordercolor"],
+        this.uniqueEntities[record.entity]["bgcolor"]
+      );
+  }
+
+  Plugin.prototype.getEntityBoxCoords = function(record, i) {
+    this.ctx.font = this.options.entityFontSize + "px " + this.options.fontFace;
+    var midX = this.midX + this.uniqueEntities[record.entity]["direction"] * (this.uniqueEntities[record.entity]["distance"] * this.options.offset + this.metaData.minOffset);
+    return {
+      "x": midX - Math.round(this.ctx.measureText(record.entity).width / 2) - this.options.entityPaddingX,
+      "y": (i + 1) * this.options.unitSize - Math.round(this.options.entityFontSize / 2) - this.options.entityPaddingY,
+      "width": this.ctx.measureText(record.entity).width + 2 * this.options.entityPaddingX,
+      "height": this.options.entityFontSize + 2 * this.options.entityPaddingY
+    }
+  }
+
+  Plugin.prototype.drawEntityText = function(record, i) {
+      var midX = this.midX + this.uniqueEntities[record.entity]["direction"] * (this.uniqueEntities[record.entity]["distance"] * this.options.offset + this.metaData.minOffset);
+      this.ctx.font = this.options.entityFontSize + "px " + this.options.fontFace;
+      this.ctx.textBaseline = "middle";
+      this.ctx.textAlign = "center";
+      this.ctx.fillStyle = this.uniqueEntities[record.entity]["fgcolor"];
+      this.ctx.fillText(record.entity, midX, (i + 1) * this.options.unitSize);
+  }
+
+  Plugin.prototype.drawDate = function(record, i) {
+      this.ctx.font = this.options.dateFontSize + "px " + this.options.fontFace;
+      var direction = this.uniqueEntities[record.entity]["direction"];
+      var midX = this.midX + direction * (Math.round(this.metaData.maxValueWidth / 2) + this.options.paddingX + this.options.datePaddingX);
+        this.ctx.textBaseline = "middle";
+        if(direction > 0) {
+          this.ctx.textAlign = "left";
+        } else {
+          this.ctx.textAlign = "right";
+        }
+      this.ctx.textBaseline = "bottom";
+      this.ctx.fillStyle = this.options.dateColor;
+      this.ctx.fillText(record.time, midX, (i + 1) * this.options.unitSize - this.options.datePaddingY);
+  }
+
+  Plugin.prototype.init = function () {
+    var that = this;
     this.drawTimeline();
 
     this.data.forEach(function(record, i) {
         that.drawValue(record, i);
+        that.drawEntity(record, i);
+        that.drawDate(record, i);
     });
   }
   

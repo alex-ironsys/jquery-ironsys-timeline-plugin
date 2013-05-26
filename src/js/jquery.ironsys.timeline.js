@@ -24,12 +24,12 @@
           "entityPaddingY": 3,
           "fontFace": "Arial",
           "fontSize": 16,
-          "height": 500,
           "lineColor": "#888888",
           "lineWidth": 2,
-          "offset": 100,
+          "offset": 50,
           "paddingX": 10,
           "paddingY": 6,
+          "showEntities": true,
           "unitSize": 50,
       };
       
@@ -91,8 +91,8 @@
 
   Plugin.prototype.initCanvas = function() {
     this.width = this.$element.width();
-    this.$element.html("<canvas id=\"ironsys_timeline\" width=\"" + this.width + "\" height=\"" + this.height + "\"></canvas>");
-    this.canvas = document.getElementById("ironsys_timeline");
+    this.$element.html("<canvas width=\"" + this.width + "\" height=\"" + this.height + "\"></canvas>");
+    this.canvas = this.$element.find("canvas").get(0);
     this.ctx = this.canvas.getContext("2d");
   }
 
@@ -314,23 +314,36 @@
 
   Plugin.prototype.drawEntity = function(record, i) {
       this.drawEntityBox(record, i);
-      this.drawEntityText(record, i);
+      if(this.options.showEntities) {
+        this.drawEntityText(record, i);
+      }
   }
 
   Plugin.prototype.drawEntityBox = function(record, i) {
       this.ctx.lineCap = "round";
       this.ctx.lineWidth = this.options.borderWidth;
       var boxCoords = this.getEntityBoxCoords(record, i);
-      console.log(boxCoords);
-      this.roundedRect(
-        boxCoords.x, 
-        boxCoords.y, 
-        boxCoords.width, 
-        boxCoords.height, 
-        this.options.entityCornerRadius,
-        this.uniqueEntities[record.entity]["bordercolor"],
-        this.uniqueEntities[record.entity]["bgcolor"]
-      );
+
+      if(this.options.showEntities) {
+        this.roundedRect(
+          boxCoords.x, 
+          boxCoords.y, 
+          boxCoords.width, 
+          boxCoords.height, 
+          this.options.entityCornerRadius,
+          this.uniqueEntities[record.entity]["bordercolor"],
+          this.uniqueEntities[record.entity]["bgcolor"]
+        );
+      } else {
+          var circleX = this.midX + this.uniqueEntities[record.entity]["direction"] * (this.uniqueEntities[record.entity]["distance"] * this.options.offset + this.metaData.minOffset);
+          var circleY = (i + 1) * this.options.unitSize;
+          this.ctx.strokeStyle = this.uniqueEntities[record.entity]["bordercolor"];
+          this.ctx.beginPath();
+          this.ctx.arc(circleX, circleY, Math.round(boxCoords.height / 2), 0, 2 * Math.PI);
+          this.ctx.stroke();
+          this.ctx.fillStyle = this.uniqueEntities[record.entity]["bgcolor"];
+          this.ctx.fill();
+      }
   }
 
   Plugin.prototype.getEntityBoxCoords = function(record, i) {
@@ -371,7 +384,6 @@
   Plugin.prototype.init = function () {
     var that = this;
     this.drawTimeline();
-
     this.data.forEach(function(record, i) {
         that.drawValue(record, i);
         that.drawEntity(record, i);

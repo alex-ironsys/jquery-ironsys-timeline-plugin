@@ -16,17 +16,18 @@ $(document).ready(function(){
 
 	$('#timeline').timeline({
 		autoUnitSize: true,
+		borderWidth: 3,
+		cornerRadius: 10,
 		cumulateValues: true,
 		data: data,
 		entityFontSize: 12,
 		fontSize: 16, 
-		fontFace: "Verdana", 
+		fontFace: "Verdana",
+		showEntities: false,
 		unitSize: 40,
-		cornerRadius: 10,
+		offset: 40,
 		paddingX: 15,
-		paddingy: 10,
-		borderWidth: 3,
-		offset: 30
+		paddingy: 10
 	});
 });
 

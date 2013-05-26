@@ -3,11 +3,13 @@ jquery-ironsys-timeline-plugin
 
 ## Introduction
 
-This is a simple plugin to visualize data on a timeline using canvas.
+This is a simple plugin to visualize events sequence and source on a "timeline" by drawing diagram using canvas.
 
 ## Demo
 
-In progress...
+You can find basic demo here:
+
+http://ironsys.pl/projects/jquery-ironsys-timeline-plugin/demo/
 
 ## Installation and usage
 
@@ -58,5 +60,15 @@ The data IS NOT sorted by the plugin. The timeline IS NOT proportional - all val
 
 ## Options
 
-In progress...
+Generally no options are required. You just have to pass valid data array while initializing plugin:
+
+:::javascript
+<script>
+$(document).ready(function(){
+  $('#place_canvas_here').timeline({ data: myDataArray });
+});
+</script>
+
+However there are many options you may cofigure manually.
+
 

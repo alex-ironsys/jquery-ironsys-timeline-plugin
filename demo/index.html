@@ -2,6 +2,8 @@
   <head>
     <title>jQuery ironsys timeline plugin demo</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="keywords" content="jquery plugin data visualization timeline ironsys" />
+    <meta name="description" content="Simple jQuery plugin to visualize events source and sequence on a timeline using canvas." />
     <link rel="stylesheet" type="text/css" media="screen" href="css/demo.css" />
     <script src="../lib/jquery-1.9.1.min.js" type="text/javascript"></script>
     <script src="../src/js/jquery.ironsys.timeline.js" type="text/javascript"></script>
@@ -9,6 +11,42 @@
   </head>
   <body>
     <h1>jQuery ironsys timeline plugin demo</h1>
+    <h2>Data</h2>
+    <pre>
+      var data = [
+        { "time": "2013-05-14 14:12:03", "entity": "192.168.0.1", "value": "Hello!" },
+        { "time": "2013-05-14 14:13:23", "entity": "192.168.0.2", "value": "Good Morning!" },
+        { "time": "2013-05-14 14:18:43", "entity": "192.168.0.1", "value": "How are you?" },
+        { "time": "2013-05-14 14:18:59", "entity": "192.168.0.1", "value": "Everything ok?" },
+        { "time": "2013-05-14 14:19:21", "entity": "192.168.0.2", "value": "Yeah, I'm fine" },
+        { "time": "2013-05-14 14:28:22", "entity": "192.168.0.3", "value": "Hello guys!" },
+        { "time": "2013-05-14 14:28:24", "entity": "192.168.0.4", "value": "Damn, what's that?" },
+        { "time": "2013-05-14 14:28:26", "entity": "192.168.0.4", "value": "Damn, what's that?" },
+        { "time": "2013-05-14 14:28:28", "entity": "192.168.0.3", "value": "What?" },
+        { "time": "2013-05-14 14:28:32", "entity": "192.168.0.4", "value": "Damn, what's that?" },
+        { "time": "2013-05-14 14:29:43", "entity": "192.168.0.3", "value": "What do you mean?" },
+        { "time": "2013-05-14 14:30:03", "entity": "192.168.0.1", "value": "Yeah, what do you mean?" },
+      ];
+    </pre>
+    <h2>Call</h2>
+    <pre>
+      $('#timeline').timeline({
+        autoUnitSize: true,
+        borderWidth: 3,
+        cornerRadius: 10,
+        cumulateValues: true,
+        data: data,
+        entityFontSize: 12,
+        fontSize: 16, 
+        fontFace: "Verdana",
+        showEntities: false,
+        unitSize: 40,
+        offset: 40,
+        paddingX: 15,
+        paddingy: 10
+      });
+    </pre>
+    <h2>Result</h2>
     <div id="timeline"></div>
   </body>
 </html>

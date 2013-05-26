@@ -73,144 +73,144 @@ However there are many options you may cofigure manually.
 
 <table>
 	<tr>
-		<th>option</th><th>default</th><th>meaning</th>
+		<th>option</th><th>type</th><th>default</th><th>meaning</th>
 	<tr>
 	<tr>
-        <td>aggregateValues</td>
-        <td>bool</td>
+        <td><b>aggregateValues</b></td>
+        <td><i>bool</i></td>
         <td>false</td>
         <td>Wheter to draw the same values coming from the same source as one block with additional counter aside</td>
     </tr>
     <tr>
-        <td>autoUnitSize</td>
-        <td>bool</td>
+        <td><b>autoUnitSize</b></td>
+        <td><i>bool</i></td>
         <td>true</td>
         <td>Wheter to calculate distance between events on the timeline automatically</td>
     </tr>
     <tr>
-        <td>borderWidth</td>
-        <td>int</td>
+        <td><b>borderWidth</b></td>
+        <td><i>int</i></td>
         <td>2</td>
         <td>Border width for all drawn boxes</td>
     </tr>
     <tr>
-        <td>cornerRadius</td>
-        <td>int</td>
+        <td><b>cornerRadius</b></td>
+        <td><i>int</i></td>
         <td>10</td>
         <td>Radius of rounded corners for boxes containing values</td>
     </tr>
     <tr>
-        <td>dateColor</td>
-        <td>color</td>
+        <td><b>dateColor</b></td>
+        <td><i>color</i></td>
         <td>#888888</td>
         <td>Color for text represanting date / time</td>
     </tr>
     <tr>
-        <td>dateFontSize</td>
-        <td>int</td>
+        <td><b>dateFontSize</b></td>
+        <td><i>int</i></td>
         <td>10</td>
         <td>Font size for text represanting date / time</td>
     </tr>
     <tr>
-        <td>dateMarginY</td>
-        <td>int</td>
+        <td><b>dateMarginY</b></td>
+        <td><i>int</i></td>
         <td>2</td>
         <td>Vertical margin for text represanting date / time</td>
     </tr>
     <tr>
-        <td>dateMarginX</td>
-        <td>int</td>
+        <td><b>dateMarginX</b></td>
+        <td><i>int</i></td>
         <td>8</td>
         <td>Horizontal margin for text represanting date / time</td>
     </tr>
     <tr>
-        <td>direction</td>
-        <td>string</td>
+        <td><b>direction</b></td>
+        <td><i>string</i></td>
         <td>down</td>
         <td>Direction of the diagram - draws the arrow for the timeline in proper place - "up" and "down" allowed</td>
     </tr>
     <tr>
-        <td>entityCornerRadius</td>
-        <td>int</td>
+        <td><b>entityCornerRadius</b></td>
+        <td><i>int</i></td>
         <td>5</td>
         <td>Radius of rounded corners for boxes containing entities</td>
     </tr>
     <tr>
-        <td>entityFontSize</td>
-        <td>int</td>
+        <td><b>entityFontSize</b></td>
+        <td><i>int</i></td>
         <td>14</td>
         <td>Font size for text represanting entities</td>
     </tr>
     <tr>
-        <td>entityPaddingX</td>
-        <td>int</td>
+        <td><b>entityPaddingX</b></td>
+        <td><i>int</i></td>
         <td>6</td>
         <td>Horizontal padding for boxes containing entities</td>
     </tr>
     <tr>
-        <td>entityPaddingY</td>
-        <td>int</td>
+        <td><b>entityPaddingY</b></td>
+        <td><i>int</i></td>
         <td>3</td>
         <td>Vertical padding for boxes containing entities</td>
     </tr>
     <tr>
-        <td>fontFace</td>
-        <td>string</td>
+        <td><b>fontFace</b></td>
+        <td><i>string</i></td>
         <td>Arial</td>
         <td>Font face name for all texts</td>
     </tr>
     <tr>
-        <td>fontSize</td>
-        <td>int</td>
+        <td><b>fontSize</b></td>
+        <td><i>int</i></td>
         <td>16</td>
         <td>Font size for text representing values</td>
     </tr>
     <tr>
-        <td>lineColor</td>
-        <td>color</td>
+        <td><b>lineColor</b></td>
+        <td><i>color</i></td>
         <td>#888888</td>
         <td>Color for timeline, lines between values and entities, and arrows</td>
     </tr>
     <tr>
-        <td>lineWidth</td>
-        <td>int</td>
+        <td><b>lineWidth</b></td>
+        <td><i>int</i></td>
         <td>2</td>
         <td>>Line width for timeline, lines between values and entities, and arrows</td>
     </tr>
     <tr>
-        <td>offset</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><b>offset</b></td>
+        <td><i>int</i></td>
+        <td>50</td>
+        <td>Value of indentation for entity series</td>
     </tr>
     <tr>
-        <td>paddingX</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><b>paddingX</b></td>
+        <td><i>int</i></td>
+        <td>10</td>
+        <td>Horizontal padding for boxes containing values</td>
     </tr>
     <tr>
-        <td>paddingY</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><b>paddingY</b></td>
+        <td><i>int</i></td>
+        <td>6</td>
+        <td>Vertical padding for boxes containing values</td>
     </tr>
     <tr>
-        <td>showDates</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><b>showDates</b></td>
+        <td><i>bool</i></td>
+        <td>true</td>
+        <td>Wheteher to render time / date texts</td>
     </tr>
     <tr>
-        <td>showEntities</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><b>showEntities</b></td>
+        <td><i>bool</i></td>
+        <td>true</td>
+        <td>Wheter to render entity indentyfing text in entity block (or empty circle instead)</td>
     </tr>
     <tr>
-        <td>unitSize</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><b>unitSize</b></td>
+        <td><i>int</i></td>
+        <td>50</td>
+        <td>Distance between adjacent values on the timeline</td>
     </tr>
 </table>

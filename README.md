@@ -5,6 +5,10 @@ jquery-ironsys-timeline-plugin
 
 This is a simple plugin to visualize data on a timeline using canvas.
 
+## Demo
+
+In progress...
+
 ## Installation and usage
 
 Include jQuery. Include plugin ( src/js/jquery.ironsys.timeline.js ).
@@ -27,7 +31,7 @@ $(document).ready(function(){
 ```
 ## Data
 
-Data consumed by plugin is an array of objects. Each of them has 3 fields `time`, `entity` and `value`. Let's consider messages as an example. You can imagine `time` is a time the message was sent, `entity` is the author of the message and `value` is content of the message:
+Data consumed by plugin is an array of objects. Each of them has 3 fields `time`, `entity` and `value`. Let's consider messages as an example. You can imagine `time` is a time the message was sent, `entity` is the author of the message (in this example it's actually his IP address) and `value` is content of the message:
 
 ```javascript
 var data = [
@@ -45,3 +49,14 @@ var data = [
 		{ "time": "2013-05-14 14:30:03", "entity": "192.168.0.1", "value": "Yeah, what do you mean?" },
 	];
 ```
+
+## How it works?
+
+The plugin will create canvas inside the specified DOM element. The canvas will have the width of this element. The height of the canvas will be dynamically calculated depending on the given data. The timeline will be dravn vertically with items representing the values on the timeline. The entities will be draw aside values. The more often given entity creates input, the closer it is to the timeline. The colors of elements on canvas are configurable. Each entity gets own color automatically (so all the values by given enityt have the same color).
+
+The data IS NOT sorted by the plugin. The timeline IS NOT proportional - all values are placed on the line within the same distance to neighbours.
+
+## Options
+
+In progress...
+

@@ -5,11 +5,11 @@ jQuery ironsys timeline plugin
 
 This is a simple plugin to visualize events sequence and source on a "timeline" by drawing diagram using canvas.
 
-## Demo
+## ~~Demo~~
 
-You can find basic demo here:
+~~You can find basic demo here:~~
 
-http://ironsys.pl/projects/jquery-ironsys-timeline-plugin/demo/
+~~http://ironsys.pl/projects/jquery-ironsys-timeline-plugin/demo/~~
 
 ## Installation and usage
 
